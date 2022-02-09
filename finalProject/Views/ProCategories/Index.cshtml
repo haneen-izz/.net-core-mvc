@@ -1,0 +1,246 @@
+﻿@model IEnumerable<finalProject.Models.ProCategory>
+
+@{
+    ViewData["Title"] = "Index";
+  Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet"> 
+
+
+
+<style>
+
+
+/* CSS */
+.button-32 {
+  background-color: #fff000;
+  border-radius: 12px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  text-align: center;
+  transition: 200ms;
+  width: 10%;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-32:not(:disabled):hover,
+.button-32:not(:disabled):focus {
+  outline: 0;
+  background: #f4e603;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.2), 0 3px 8px 0 rgba(0,0,0,.15);
+}
+
+.button-32:disabled {
+  filter: saturate(0.2) opacity(0.5);
+  cursor: not-allowed;
+}
+
+
+
+
+
+
+</style>
+
+
+
+
+<button id="export"  style="background-color:#323232 ; color:whitesmoke; position:relative;left : 65px"  class="button-32" role="button">Excel</button>
+
+
+
+    <button id="export1" onclick="exportTableToCSV('members.csv')" class="btn btn-danger" hidden>CSV</button>
+
+    <button style="background-color:grey; color:whitesmoke;  position:relative;left : 40px" class="button-32" role="button" onclick="printTable();"><span class="glyphicon glyphicon-print"></span> Print</button>
+
+        <a asp-action="Create"><button style="background-color:#323232 ; color:whitesmoke;  position:relative;left : 15px" class="button-32" role="button"> create new </button></a>
+<div class="card-block table-border-style" style="padding:60px">
+        <div class="table-responsive">
+            <table class="table table-hover"   id="tableData">
+    <thead >
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+     <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+
+                 <a asp-action="Edit" asp-route-id="@item.CategoryId">
+                   <img src=@Url.Content("~/Image/" + item.Image) asp-append-version="true" class="poster" width="300" height="200" />
+                </a>
+            </td>
+              <td>
+                <a  style="color:black ; text-decoration:none"  asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                <a  style="color:black ; text-decoration:none" asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
+                <a  style="color:black ; text-decoration:none"  asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+            </td>
+            <td>
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+</div>
+</div>
+
+<script>
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            for (var j = 0; j < cols.length; j++)
+                row.push(cols[j].innerText);
+            csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], { type: "text/csv" });
+
+        downloadLink = document.createElement("a");
+
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        downloadLink.style.display = "none";
+
+        document.body.appendChild(downloadLink);
+
+        downloadLink.click();
+    }
+
+    document.getElementById('export').onclick = function () {
+        var tableId = document.getElementById('tableData').id;
+        htmlTableToExcel(tableId, filename = '');
+    }
+    var htmlTableToExcel = function (tableId, fileName = '') {
+        var downloadedFileName = 'excel_table_data';
+        var TableDataType = 'application/vnd.ms-excel';
+        var selectTable = document.getElementById(tableId);
+        var htmlTable = selectTable.outerHTML.replace(/ /g, '%20');
+
+        filename = filename ? filename + '.xls' : downloadedFileName + '.xls';
+        var downloadingURL = document.createElement("a");
+        document.body.appendChild(downloadingURL);
+
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['\ufeff', htmlTable], {
+                type: TableDataType
+            });
+            navigator.msSaveOrOpenBlob(blob, fileName);
+        } else {
+
+            downloadingURL.href = 'data:' + TableDataType + ', ' + htmlTable;
+            downloadingURL.download = fileName;
+            downloadingURL.click();
+        }
+    }
+
+    function printTable() {
+        var el = document.getElementById("tableData");
+
+        el.setAttribute('border', '5px');
+        el.setAttribute('cellpadding', '5');
+        el.setAttribute('color', 'green');
+        newPrint = window.open("");
+        newPrint.document.write(el.outerHTML);
+        newPrint.print();
+        newPrint.close();
+    }
+
+</script>
+
+
+
+
+
+@*
+<style>
+
+#Image:hover{
+ position: relative;
+ top: 0px;
+ animation: mymove 1s infinite;
+}
+@@keyframes mymove{
+    from {top: 0px;}
+  to {top: -10px;}
+}
+
+
+
+</style>
+ <h1 style="color:black;position:relative; top:19px; left:15px;font-family: 'Marck Script', cursive; font-size:2rem; text-align:center;  border-bottom: black solid 4px;
+  padding: 5px;
+  padding-top: 30px;
+  margin: 1px 41.5%;">cake category</h1>
+
+ <div style="width:94% ;padding-top:10px;margin-bottom: 210px; position:relative ;left: 3%;  background: linear-gradient( #9a8478, #1e130c);top:60px;z-index:1;border-radius:20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+
+        <a asp-action="Create">Create New</a>
+    <div style="margin:60px; background-color:white ;border-radius:20px">
+        <div style="margin-bottom:30px" class="container mx-auto mt-4">
+     <div class="row">
+           @foreach (var item in Model) {
+
+ <div class="col-md-4" style="padding:40px; ">
+
+      <div class="card" style="width: 18rem; border:none ">
+              <a href="/ProProducts/Index/@item.CategoryId"><img id="Image" class="card-img-top"  src="@Url.Content("~/Image/" + item.Image)" alt="Cake"> </a>
+ 
+  <div class="card-body">
+  <a href="/ProProducts/Index/@item.CategoryId" style="text-decoration:none ;color:black" >  <h5 class="card-title" style="text-align:center">  @Html.DisplayFor(modelItem => item.CategoryName)</h5> </a>
+                
+
+               <div style="text-align:center">
+    
+                <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+            
+                </div>
+  </div>
+</div>
+</div>
+    }
+</div>
+</div>
+<hr style="color:white">
+    </div>
+    <hr  style="color:white">
+
+
+</div>
+
+
+*@

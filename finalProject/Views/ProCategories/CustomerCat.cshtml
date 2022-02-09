@@ -1,0 +1,129 @@
+﻿@model IEnumerable<finalProject.Models.ProCategory>
+
+@{
+    ViewData["Title"] = "ProCat";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+       var id = ViewBag.session;
+}
+
+@*<style>
+
+#Image:hover{
+ position: relative;
+ top: 0px;
+ animation: mymove 1s infinite;
+}
+@@keyframes mymove{
+    from {top: 0px;}
+  to {top: -10px;}
+}
+
+
+
+</style>
+<div style="width:94% ; position:relative ;left: 3%;background-color:#9c6644;top:-100px;z-index:1;border-radius:20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+
+       <h1 style="color:white;position:relative; top:10px; left:15px;font-family: 'Marck Script', cursive;">cake category</h1>
+  
+    <div style="margin:60px; background-color:white ;border-radius:20px">
+        <div style="margin-bottom:30px" class="container mx-auto mt-4">
+     <div class="row">
+           @foreach (var item in Model) {
+
+ <div class="col-md-4" style="padding:40px; ">
+
+      <div class="card" style="width: 18rem; border:none ">
+              <a href="/ProProducts/customerPro/@item.CategoryId"><img id="Image" class="card-img-top"  src="@Url.Content("~/Image/" + item.Image)" alt="Cake"> </a>
+    <a asp-action="Edit" asp-route-id="@item.CategoryId" />
+  <div class="card-body">
+  <a href="/ProProducts/customerPro/@item.CategoryId" style="text-decoration:none ;color:black" >  <h5 class="card-title" style="text-align:center">  @Html.DisplayFor(modelItem => item.CategoryName)</h5> </a>
+=
+                
+
+  </div>
+</div>
+</div>
+    }
+</div>
+</div>
+<hr style="color:white">
+    </div>
+    <hr  style="color:white">
+
+
+</div>
+
+*@
+
+
+
+<style>
+    body{
+        background-color:whitesmoke;
+    }
+#Image1:hover{
+ position: relative;
+ top: 0px;
+ animation: mymove 1s infinite;
+}
+@@keyframes mymove{
+    from {top: 0px;}
+  to {top: -10px;}
+}
+
+
+
+</style>
+
+<form style="position:relative; top: 100px; left : 820px;" asp-controller="proCategories" asp-action="CustomerCat">
+   
+        <input style="border-radius: 25px; width:320px; height:50px;padding:10px" type="text" name="name" placeholder ="     search for a category" />
+        @* <i  type="submit" class="fas fa-search"></i>*@
+
+       
+
+       
+  <input style="border-radius: 25px; width:120px;height:50px" type="submit" value="search" />
+</form>
+
+
+
+
+
+
+
+
+    <h1 style="color:black;position:relative; top:19px; left:15px;font-family: 'Marck Script', cursive; font-size:2rem; text-align:center;  border-bottom: black solid 4px;
+  padding: 5px;
+  padding-top: 30px;
+  margin: 1px 41.5%;">cake category</h1>
+<div style="width:94% ;padding-top:10px;margin-bottom: 210px; position:relative ;left: 3%;  background: linear-gradient( #bdc3c7, #616161);top:60px;z-index:1;border-radius:20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+
+    <div style="margin:60px; background-color:white ;border-radius:20px">
+        <div style="margin-bottom:30px" class="container mx-auto mt-4">
+     <div class="row">
+           @foreach (var item in Model) {
+
+ <div class="col-md-4" style="padding:40px; ">
+
+      <div  style="width: 18rem; border:none ">
+              <a href="/ProProducts/proCat/@item.CategoryId"><img id="Image1"  src="@Url.Content("~/Image/" + item.Image)" alt="Cake"> </a>
+ 
+  <div class="card-body">
+  <a href="/ProProducts/proCat/@item.CategoryId"style="text-decoration:none ;color:black" >  <h5 class="card-title" style="text-align:center">  @Html.DisplayFor(modelItem => item.CategoryName)</h5> </a>
+
+                
+
+               
+  </div>
+</div>
+</div>
+    }
+</div>
+</div>
+<hr style="color:brown">
+    </div>
+    <hr  style="color:white">
+
+
+</div>

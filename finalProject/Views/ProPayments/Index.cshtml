@@ -1,0 +1,183 @@
+﻿@model IEnumerable<finalProject.Models.ProPayment>
+
+@{
+    ViewData["Title"] = "Index";
+  Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+
+
+/* CSS */
+.button-32 {
+  background-color: #fff000;
+  border-radius: 12px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  text-align: center;
+  transition: 200ms;
+  width: 10%;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-32:not(:disabled):hover,
+.button-32:not(:disabled):focus {
+  outline: 0;
+  background: #f4e603;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.2), 0 3px 8px 0 rgba(0,0,0,.15);
+}
+
+.button-32:disabled {
+  filter: saturate(0.2) opacity(0.5);
+  cursor: not-allowed;
+}
+
+
+</style>
+
+
+<button id="export"  style="background-color:#323232 ; color:whitesmoke; position:relative;left : 65px"  class="button-32" role="button">Excel</button>
+
+
+
+    <button id="export1" onclick="exportTableToCSV('members.csv')" class="btn btn-danger" hidden>CSV</button>
+
+    <button style="background-color:grey; color:whitesmoke;  position:relative;left : 40px" class="button-32" role="button" onclick="printTable();"><span class="glyphicon glyphicon-print"></span> Print</button>
+
+        <a asp-action="Create"><button style="background-color:#323232 ; color:whitesmoke;  position:relative;left : 15px" class="button-32" role="button"> create new </button></a>
+<div class="card-block table-border-style" style="padding:60px">
+        <div class="table-responsive">
+            <table class="table table-hover" id="tableData">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CardName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardExp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserId)
+            </td>
+            <td>
+                <a style="color:black ; text-decoration:none"  asp-action="Edit" asp-route-id="@item.PaymentId">Edit</a> |
+                <a style="color:black ; text-decoration:none"  asp-action="Details" asp-route-id="@item.PaymentId">Details</a> |
+                <a style="color:black ; text-decoration:none" asp-action="Delete" asp-route-id="@item.PaymentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+</div>
+</div>
+
+<script>
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            for (var j = 0; j < cols.length; j++)
+                row.push(cols[j].innerText);
+            csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], { type: "text/csv" });
+
+        downloadLink = document.createElement("a");
+
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        downloadLink.style.display = "none";
+
+        document.body.appendChild(downloadLink);
+
+        downloadLink.click();
+    }
+
+    document.getElementById('export').onclick = function () {
+        var tableId = document.getElementById('tableData').id;
+        htmlTableToExcel(tableId, filename = '');
+    }
+    var htmlTableToExcel = function (tableId, fileName = '') {
+        var downloadedFileName = 'excel_table_data';
+        var TableDataType = 'application/vnd.ms-excel';
+        var selectTable = document.getElementById(tableId);
+        var htmlTable = selectTable.outerHTML.replace(/ /g, '%20');
+
+        filename = filename ? filename + '.xls' : downloadedFileName + '.xls';
+        var downloadingURL = document.createElement("a");
+        document.body.appendChild(downloadingURL);
+
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['\ufeff', htmlTable], {
+                type: TableDataType
+            });
+            navigator.msSaveOrOpenBlob(blob, fileName);
+        } else {
+
+            downloadingURL.href = 'data:' + TableDataType + ', ' + htmlTable;
+            downloadingURL.download = fileName;
+            downloadingURL.click();
+        }
+    }
+
+    function printTable() {
+        var el = document.getElementById("tableData");
+
+        el.setAttribute('border', '5px');
+        el.setAttribute('cellpadding', '5');
+        el.setAttribute('color', 'green');
+        newPrint = window.open("");
+        newPrint.document.write(el.outerHTML);
+        newPrint.print();
+        newPrint.close();
+    }
+
+</script>

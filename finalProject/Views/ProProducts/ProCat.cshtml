@@ -1,0 +1,74 @@
+﻿@model IEnumerable<finalProject.Models.ProProduct>
+
+@{
+    ViewData["Title"] = "ProCat";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<style>
+
+#button{
+   background: linear-gradient( #bdc3c7, #616161);
+}
+#button:hover{
+    color: black;
+    Background:whitesmoke;
+    border:solid 1.5px black;
+    
+
+}
+#btnP{
+    text-decoration:none;
+    color:black;
+    font-family: 'Dongle', sans-serif;
+    font-size: 28px;
+}
+#btnP:hover{
+  font-weight:bold;
+
+}
+
+
+
+</style>
+<link rel="stylesheet" href="/card/StyleSheet.css">
+
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+
+            @foreach (var item in Model) {
+            <div class="col">
+                <div class="card h-100 shadow-sm"> <img  src=@Url.Content("~/Image/" + item.Image) class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+                            
+                            @*
+                            <span class="float-start badge rounded-pill bg-dark " >@Html.DisplayFor(modelItem => item.Sale)</span>
+                                 <span class="float-start badge rounded-pill"  style="position:relative; left: 2px; background-color:#b29f94" >@Html.DisplayFor(modelItem => item.Cost)</span> *@
+                            
+                            <span class="float-end price-hp ">  @Html.DisplayFor(modelItem => item.Sale)$</span> </div>
+                        <h5 class="card-title" style="text-align:center">
+                             @Html.DisplayFor(modelItem => item.ProductName)
+                           @*  @Html.DisplayFor(modelItem => item.CategoryId)*@
+                         
+                        </h5>
+                        <div style="text-align:center">
+
+
+                </div>
+                       <div class="text-center my-4"> <a href="https://localhost:44316/ProOrders" id="button" class="btn btn-warning" >order <i style="position:relative; left:3.5px" class="bi bi-cart"></i></a></div>
+                       
+
+                    </div>
+                </div>
+            </div>
+            }
+              </div>
+            </div>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<finalProject.Models.ProAbout>
+@{
+    ViewData["Title"] = "AboutCustomer";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+       var id = ViewBag.session;
+}
+
+<h2>about our shop</h2>
+
+<div style="width:100%;position:relative; margin-bottom:100px">
+<img style="position:absolute; right:0px;border-radius: 14px ;border:5px grey solid " src="https://images.unsplash.com/photo-1570038283490-0c2b8fe95b2b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGNha2UlMjBzaG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60" />
+</div>
+<section>
+
+@foreach (var item in Model.Reverse()) {
+        <h3  style="position:relative; bottom:150px">
+           @Html.DisplayFor(modelItem => item.Text2)
+       
+                </h3>
+
+
+}
+
+
+</section>
+
+

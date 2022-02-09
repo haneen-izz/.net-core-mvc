@@ -1,0 +1,39 @@
+﻿@model finalProject.Models.ProTestimonial
+@{
+    ViewData["Title"] = "userTestimonial";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    var id = ViewBag.session;
+}
+
+
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="userTestimonial">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TestimonialText" class="control-label"></label>
+                <input asp-for="TestimonialText" class="form-control" />
+                <span asp-validation-for="TestimonialText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class ="form-control" value="@id"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="proHomepages" asp-action="homeCustomer">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

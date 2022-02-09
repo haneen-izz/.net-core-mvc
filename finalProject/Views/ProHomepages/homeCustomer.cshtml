@@ -1,0 +1,187 @@
+﻿@model Tuple<IEnumerable<finalProject.Models.ProCategory>, IEnumerable<finalProject.Models.ProProduct>,IEnumerable<finalProject.Models.ProHomepage>>;
+@{
+    ViewData["Title"] = "homeCustomer";
+   Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+      var id = ViewBag.session;
+}
+
+
+
+<style>
+    
+#Image1:hover{
+ position: relative;
+ top: 0px;
+ animation: mymove 1s infinite;
+}
+@@keyframes mymove{
+    from {top: 0px;}
+  to {top: -10px;}
+}
+
+
+
+</style>
+    <h1 style="color:black;position:relative; top:19px; left:15px;font-family: 'Marck Script', cursive; font-size:2rem; text-align:center;  border-bottom: black solid 4px;
+  padding: 5px;
+  padding-top: 30px;
+  margin: 1px 41.5%;">cake category</h1>
+<div style="width:94% ;padding-top:10px;margin-bottom: 210px; position:relative ;left: 3%;  background: linear-gradient( #bdc3c7, #616161);top:60px;z-index:1;border-radius:20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+
+    <div style="margin:60px; background-color:white ;border-radius:20px">
+        <div style="margin-bottom:30px" class="container mx-auto mt-4">
+     <div class="row">
+           @foreach (var item in Model.Item1) {
+
+ <div class="col-md-4" style="padding:40px; ">
+
+      <div  style="width: 18rem; border:none ">
+              <a href="/ProProducts/ProCat/@item.CategoryId"><img id="Image1"  src="@Url.Content("~/Image/" + item.Image)" alt="Cake"> </a>
+ 
+  <div class="card-body">
+  <a href="https://localhost:44316/ProProducts" style="text-decoration:none ;color:black" >  <h5 class="card-title" style="text-align:center">  @Html.DisplayFor(modelItem => item.CategoryName)</h5> </a>
+ @*   <a href="#" class="btn btn-primary">Go somewhere</a>*@
+                
+
+               
+  </div>
+</div>
+</div>
+    }
+</div>
+</div>
+<hr style="color:brown">
+    </div>
+    <hr  style="color:white">
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+@*product cards*@
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<style>
+
+#button2{
+   background: linear-gradient(  #bdc3c7, #616161);
+}
+#button2:hover{
+    color: black;
+    Background:whitesmoke;
+    border:solid 1.5px  black;
+    
+
+}
+#btnP{
+    text-decoration:none;
+    color:black;
+    font-family: 'Dongle', sans-serif;
+    font-size: 28px;
+}
+#btnP:hover{
+  font-weight:bold;
+
+}
+
+
+
+
+</style>
+
+
+
+   <link href="~/card/StyleSheet.css" rel="stylesheet" />
+
+ <h1 style="color:black;position:relative; bottom:10px; left:15px;font-family: 'Marck Script', cursive; font-size:2rem; text-align:center;  border-bottom: black solid 4px;
+  padding: 5px;
+  padding-top: 30px;
+  margin: 1px 37%;">checkout our product</h1>
+
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+
+            @foreach (var item in Model.Item2) {
+            <div class="col">
+                <div class="card h-100 shadow-sm"> <img  src=@Url.Content("~/Image/" + item.Image) class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+                            
+                            
+                            <span class="float-start badge rounded-pill bg-dark ">Quantity: @Html.DisplayFor(modelItem => item.Quantity)</span>
+                               @* <span class="float-start badge rounded-pill"  style="position:relative; left: 2px; background-color:#b29f94" >@Html.DisplayFor(modelItem => item.Cost)</span> *@
+                            
+                            <span class="float-end price-hp ">  @Html.DisplayFor(modelItem => item.Sale)$</span> </div>
+                        <h5 class="card-title" style="text-align:center">
+                             @Html.DisplayFor(modelItem => item.ProductName)
+                         
+                        </h5>
+                        <div style="text-align:center">
+
+
+                </div>
+                       <div class="text-center my-4"> <a href="https://localhost:44316/ProOrders" id="button2" class="btn btn-warning" >order <i style="position:relative; left:3.5px" class="bi bi-cart"></i></a></div>
+                       
+
+                    </div>
+                </div>
+            </div>
+            }
+              </div>
+            </div>
+
+
+
+
+       <style>
+       #imageHover:hover{
+           opacity: 0.8;
+       }
+
+
+
+       </style>
+
+
+
+ <h1 style="color:black;position:relative; bottom:20px; left:15px;font-family: 'Marck Script', cursive; font-size:2rem; text-align:center;  border-bottom: black solid 4px;
+  padding: 5px;
+  padding-top: 79px;
+  margin: 1px 39%;">our achievements</h1>
+
+<div style="padding-top:40px" id="carousel-with-lb" class="carousel slide carousel-multi-item" data-ride="carousel">
+    <div class="carousel-inner mdb-lightbox" role="listbox">
+    <div id="mdb-lightbox-ui"></div>
+    <!--First slide-->
+    <div class=" carousel-item active text-center">
+
+        
+       @foreach (var item in Model.Item3) {
+      <figure class="col-md-4 d-md-inline-block">
+        <a href="https://localhost:44316/ProProducts/customerPro"
+          data-size="1600x1067">
+          <img style="width:300px ;height:200px;border-radius: 10px; " id="imageHover" src="@Url.Content("~/Image/" + item.Image)"
+            class="img-fluid">
+        </a>
+      </figure>
+       }
+    
+
+    </div>
+    </div>
+        </div>
+
+
